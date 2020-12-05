@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ayuan.staging.dao.UserDao">
+
+    <select id="getAllUser" resultType="com.ayuan.staging.entity.po.User">
+        select * from user;
+    </select>
+
+    <select id="getAllUserPage" resultType="com.ayuan.staging.entity.po.User">
+        select * from user
+    </select>
+
+    <select id="getUserById" parameterType="java.lang.String" resultType="com.ayuan.staging.entity.po.User">
+        select
+        <include refid="userFields"/>
+        from USER
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <sql id="userFields">
+        id,userName,passWord
+    </sql>
+
+
+</mapper>

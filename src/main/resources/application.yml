@@ -1,0 +1,29 @@
+constant:
+  projectName: myStaging
+  version: v_1.0
+
+spring:
+  profiles:
+    active: test
+
+
+## mybatis框架 -配置信息
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    # 开启日志打印sql
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+## Mybatis-pagehelper插件配置
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+  helper-dialect: mysql
+
+## Log配置
+logging:
+  config: classpath:log4j2-spring.xml
+  level:
+    cn.jay.repository: trace
