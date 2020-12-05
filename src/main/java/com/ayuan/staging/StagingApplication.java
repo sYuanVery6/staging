@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author sYuan
  */
-@MapperScan(basePackages = "com.ayuan.staging.dao")
 @SpringBootApplication
 public class StagingApplication {
 

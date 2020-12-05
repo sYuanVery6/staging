@@ -1,4 +1,4 @@
-package com.ayuan.staging.common.jwt.annonation;
+package com.ayuan.staging.common.annonation.jwt;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

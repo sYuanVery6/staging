@@ -1,8 +1,8 @@
 package com.ayuan.staging.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ayuan.staging.common.jwt.annonation.PassToken;
-import com.ayuan.staging.common.jwt.annonation.UserLoginToken;
+import com.ayuan.staging.common.annonation.jwt.PassToken;
+import com.ayuan.staging.common.annonation.jwt.UserLoginToken;
 import com.ayuan.staging.common.util.JwtUtil;
 import com.ayuan.staging.dao.UserDao;
 import com.ayuan.staging.entity.po.User;
@@ -87,6 +87,15 @@ public class HelloController {
         log.debug("debug");
         log.trace("trace");
 
+    }
+
+    @PassToken
+    @PutMapping("user")
+    public void addUser(){
+        User user = new User();
+        user.setUserName("aaa");
+        user.setPassWord("bbsss");
+        userService.addUser(user);
     }
 
 }

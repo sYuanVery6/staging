@@ -31,4 +31,6 @@ public interface UserDao {
      */
     User getUserById(@Param("id") String userId);
 
+    void addUser(User user);
+
 }

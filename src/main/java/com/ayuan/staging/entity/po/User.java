@@ -1,6 +1,10 @@
 package com.ayuan.staging.entity.po;
 
+import com.ayuan.staging.common.annonation.mybatis.AutoId;
+
+@AutoId(name = "id")
 public class User {
+
     private String id;
     private String userName;
     private String passWord;

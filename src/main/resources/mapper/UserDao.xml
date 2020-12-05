@@ -27,5 +27,12 @@
         id,userName,passWord
     </sql>
 
+    <insert id="addUser" parameterType="com.ayuan.staging.entity.po.User">
+        insert into User
+            (<include refid="userFields" />)
+        values
+            (#{id},#{userName},#{passWord})
+    </insert>
+
 
 </mapper>

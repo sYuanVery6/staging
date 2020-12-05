@@ -32,4 +32,9 @@ public class UserServiceImpl implements UserService {
     public User getUserById(String id) {
         return userDao.getUserById(id);
     }
+
+    @Override
+    public void addUser(User user) {
+        userDao.addUser(user);
+    }
 }
