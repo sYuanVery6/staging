@@ -24,15 +24,20 @@
     </select>
 
     <sql id="userFields">
-        id,userName,passWord
+        id,userName,passWord,createTime,updateTime
     </sql>
 
     <insert id="addUser" parameterType="com.ayuan.staging.entity.po.User">
-        insert into User
-            (<include refid="userFields" />)
+        insert into USER
+        (<include refid="userFields"/>)
         values
-            (#{id},#{userName},#{passWord})
+        (#{id},#{userName},#{passWord},#{createTime},#{updateTime})
     </insert>
+
+    <update id="updateUser" parameterType="com.ayuan.staging.entity.po.User">
+        update USER set userName = #{userName} , updateTime = #{updateTime}
+        where id = #{id}
+    </update>
 
 
 </mapper>

@@ -1,21 +1,33 @@
 package com.ayuan.staging.entity.po;
 
+import com.ayuan.staging.common.annonation.mybatis.AutoDate;
 import com.ayuan.staging.common.annonation.mybatis.AutoId;
 
+import java.util.Date;
+
+/**
+ * User实体类
+ * @author sYuan
+ */
 @AutoId(name = "id")
+@AutoDate
 public class User {
 
     private String id;
     private String userName;
     private String passWord;
+    private Date createTime;
+    private Date updateTime;
 
-    public User(String id, String userName, String passWord) {
+    public User() {
+    }
+
+    public User(String id, String userName, String passWord, Date createTime, Date updateTime) {
         this.id = id;
         this.userName = userName;
         this.passWord = passWord;
-    }
-
-    public User() {
+        this.createTime = createTime;
+        this.updateTime = updateTime;
     }
 
     @Override
@@ -24,7 +36,25 @@ public class User {
                 "id='" + id + '\'' +
                 ", userName='" + userName + '\'' +
                 ", passWord='" + passWord + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
                 '}';
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public String getId() {

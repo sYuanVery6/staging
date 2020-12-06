@@ -98,4 +98,13 @@ public class HelloController {
         userService.addUser(user);
     }
 
+    @PassToken
+    @PostMapping("user")
+    public void updateUser(){
+        User user = new User();
+        user.setId("1669468160");
+        user.setUserName("sssyyy");
+        userService.updateUser(user);
+    }
+
 }

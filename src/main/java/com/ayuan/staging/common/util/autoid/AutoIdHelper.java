@@ -3,7 +3,6 @@ package com.ayuan.staging.common.util.autoid;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.net.UnknownHostException;
 
 /**
  * @author sYuan
@@ -14,47 +13,47 @@ public class AutoIdHelper {
     /**
      * 时间启示标记点，作为基准，一般取系统的最近时间(一旦确定不能变动)
      */
-    private final static long twepoch = 1288834974657L;
+    private final static long TWEPOCH = 1288834974657L;
 
     /**
      * 机器标识位数
      */
-    private final static long workerIdBits = 5L;
+    private final static long WORKER_ID_BITS = 5L;
 
     /**
      * 机器ID最大值
      */
-    private final static long maxWorkerId = -1L * (-1L << workerIdBits);
+    private final static long MAX_WORKER_ID = -1L * (-1L << WORKER_ID_BITS);
 
     /**
      * 数据中心标识位数
      */
-    private final static long dataCenterIdBits = 5L;
+    private final static long DATA_CENTER_ID_BITS = 5L;
 
     /**
      * 数据中心Id最大值
      */
-    private final static long maxDataCenterId = -1L ^ (-1L << dataCenterIdBits);
+    private final static long MAX_DATA_CENTER_ID = -1L ^ (-1L << DATA_CENTER_ID_BITS);
 
     /**
      * 毫秒内自增位
      */
-    private final static long sequenceBits = 12L;
+    private final static long SEQUENCE_BITS = 12L;
 
     /**
      * 机器ID偏左移12位
      */
-    private final static long workerIdShift = sequenceBits;
+    private final static long WORKER_ID_SHIFT = SEQUENCE_BITS;
 
     /**
      * 数据中心ID左移17位
      */
-    private final static long dataCenterShift = sequenceBits + workerIdBits;
+    private final static long DATA_CENTER_SHIFT = SEQUENCE_BITS + WORKER_ID_BITS;
 
     /**
      * 时间毫秒左移22位
      */
-    private final static long timeStampLeftShift = sequenceBits + workerIdBits + dataCenterIdBits;
+    private final static long timeStampLeftShift = SEQUENCE_BITS + WORKER_ID_BITS + DATA_CENTER_ID_BITS;
 
     /**
      * 上次生产id时间戳
@@ -72,8 +71,8 @@ public class AutoIdHelper {
 
 
     public AutoIdHelper() {
-        this.dataCenterId = getDataCenterId(maxDataCenterId);
-        this.workerId = getMaxWorkerId(dataCenterId, maxWorkerId);
+        this.dataCenterId = getDataCenterId(MAX_DATA_CENTER_ID);
+        this.workerId = getMaxWorkerId(dataCenterId, MAX_WORKER_ID);
     }
 
     /**
@@ -81,11 +80,11 @@ public class AutoIdHelper {
      * @param dataCenterId 序列号
      */
     public AutoIdHelper(long workerId, long dataCenterId) {
-        if (workerId > maxWorkerId || workerId < 0) {
-            throw new IllegalArgumentException(String.format("worker id cann't be  be greater than %d or less than 0", maxWorkerId));
+        if (workerId > MAX_WORKER_ID || workerId < 0) {
+            throw new IllegalArgumentException(String.format("worker id cann't be  be greater than %d or less than 0", MAX_WORKER_ID));
         }
-        if (dataCenterId > maxDataCenterId || dataCenterId < 0) {
-            throw new IllegalArgumentException(String.format("dataCenter id cann't be  be greater than %d or less than 0", maxDataCenterId));
+        if (dataCenterId > MAX_DATA_CENTER_ID || dataCenterId < 0) {
+            throw new IllegalArgumentException(String.format("dataCenter id cann't be  be greater than %d or less than 0", MAX_DATA_CENTER_ID));
         }
         this.workerId = workerId;
         this.dataCenterId = dataCenterId;
@@ -114,9 +113,9 @@ public class AutoIdHelper {
         lastTimeStamp = timeStamp;
 
         // id偏移组合生成最终id，并返回
-        long nextId = ((timeStamp - twepoch)<<timeStampLeftShift)
-                |(dataCenterId<<dataCenterShift)
-                |(workerId<<workerIdShift)
+        long nextId = ((timeStamp - TWEPOCH)<<timeStampLeftShift)
+                |(dataCenterId<<DATA_CENTER_SHIFT)
+                |(workerId<<WORKER_ID_SHIFT)
                 |sequence;
         return nextId;
     }
@@ -148,7 +147,7 @@ public class AutoIdHelper {
         /*
          * MAC + PID 的 hashCode 获取16个低位
          */
-        return (mpid.toString().hashCode() & 0xff) % (maxWorkerId + 1);
+        return (mpid.toString().hashCode() & 0xff) % (MAX_WORKER_ID + 1);
     }
 
     protected static long getDataCenterId(long maxDataCenterId) {
