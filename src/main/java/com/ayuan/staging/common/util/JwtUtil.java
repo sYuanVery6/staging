@@ -50,9 +50,11 @@ public class JwtUtil {
 
     public static String getToken(User user){
         String token = "";
-
+        //过期时间
+        Date date = new Date(System.currentTimeMillis()+EXPIRE_TIME);
         token = JWT.create()
                 .withAudience(user.getId())
+                .withExpiresAt(date)
                 .sign(Algorithm.HMAC256(user.getPassWord()));
 
         return token;

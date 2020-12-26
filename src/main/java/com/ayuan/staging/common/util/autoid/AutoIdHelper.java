@@ -7,6 +7,10 @@ import java.net.NetworkInterface;
 /**
  * @author sYuan
  * @Description 分布式自增长主键ID：64位ID(42[毫秒]+5[机器ID]+5[业务编码]+12[重复累加])
+ * @Remark  雪花id的弊端：
+ *          生成id不依赖数据库和内存，而是依赖服务器的系统时间，
+ *          如果服务器的系统时间出现问题，会影响id的生成，
+ *          生成id之后，id无法随数据库时间的修复而修复
  */
 public class AutoIdHelper {
 
@@ -32,8 +36,9 @@ public class AutoIdHelper {
 
     /**
      * 数据中心Id最大值
+     * -1L ^ (-1L << DATA_CENTER_ID_BITS)
      */
-    private final static long MAX_DATA_CENTER_ID = -1L ^ (-1L << DATA_CENTER_ID_BITS);
+    private final static long MAX_DATA_CENTER_ID = ~(-1L << DATA_CENTER_ID_BITS);
 
     /**
      * 毫秒内自增位
@@ -53,7 +58,7 @@ public class AutoIdHelper {
     /**
      * 时间毫秒左移22位
      */
-    private final static long timeStampLeftShift = SEQUENCE_BITS + WORKER_ID_BITS + DATA_CENTER_ID_BITS;
+    private final static long TIME_STAMP_LEFT_SHIFT = SEQUENCE_BITS + WORKER_ID_BITS + DATA_CENTER_ID_BITS;
 
     /**
      * 上次生产id时间戳
@@ -113,7 +118,7 @@ public class AutoIdHelper {
         lastTimeStamp = timeStamp;
 
         // id偏移组合生成最终id，并返回
-        long nextId = ((timeStamp - TWEPOCH)<<timeStampLeftShift)
+        long nextId = ((timeStamp - TWEPOCH)<<TIME_STAMP_LEFT_SHIFT)
                 |(dataCenterId<<DATA_CENTER_SHIFT)
                 |(workerId<<WORKER_ID_SHIFT)
                 |sequence;

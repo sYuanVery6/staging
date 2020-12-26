@@ -9,7 +9,8 @@ spring:
 
 ## mybatis框架 -配置信息
 mybatis:
-  mapper-locations: classpath:mapper/*.xml
+  mapper-locations:
+    - classpath:mapper/*.xml
   configuration:
     # 开启日志打印sql
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
