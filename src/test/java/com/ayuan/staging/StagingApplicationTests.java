@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 public class StagingApplicationTests {
@@ -21,5 +22,17 @@ public class StagingApplicationTests {
         List<User> list = userDao.getAllUser();
         System.out.println(list);
     }
+
+    @Test
+    public void getUser(){
+
+
+        System.out.println(Integer.MAX_VALUE);
+//        User user = userDao.getUserById("1");
+//        System.out.println(user);
+
+    }
+
+
 
 }

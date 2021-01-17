@@ -27,12 +27,18 @@ public interface UserDao {
 
     /**
      * 根据id获取User
+     * @param userId 用户id
      * @return user
      */
     User getUserById(@Param("id") String userId);
 
+    /**
+     * 添加User
+     * @param user 用户
+     */
     void addUser(User user);
 
     void updateUser(User user);
+
 
 }
