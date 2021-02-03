@@ -63,10 +63,10 @@ public class HelloController {
         User userForBase = userService.getUserById(user.getId());
 
         if(userForBase == null){
-            return ResponseEntity.fail("The user does not exist .","400");
+            return ResponseEntity.fail("The user does not exist .",400);
         }
         if(!userForBase.getPassWord().equals(user.getPassWord())){
-            return ResponseEntity.fail("Incorrect password .","401");
+            return ResponseEntity.fail("Incorrect password .",401);
         }
 
         String token = JwtUtil.getToken(userForBase);

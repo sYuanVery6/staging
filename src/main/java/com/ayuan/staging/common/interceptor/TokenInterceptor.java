@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.ayuan.staging.common.annonation.jwt.PassToken;
 import com.ayuan.staging.common.annonation.jwt.UserLoginToken;
 import com.ayuan.staging.entity.po.User;
@@ -58,7 +59,7 @@ public class TokenInterceptor implements HandlerInterceptor {
                     response.setContentType("application/json; charset=utf-8");
                     PrintWriter out = null;
                     out = response.getWriter();
-                    out.append(ResponseEntity.fail("no token ,please reLogin .","401").toString());
+                    out.append(ResponseEntity.fail("no token ,please reLogin .",401).toString());
                     return false;
                 }
 
@@ -71,7 +72,7 @@ public class TokenInterceptor implements HandlerInterceptor {
                     response.setContentType("application/json; charset=utf-8");
                     PrintWriter out = null;
                     out = response.getWriter();
-                    out.append(ResponseEntity.fail("the user does not exist .","501").toString());
+                    out.append(ResponseEntity.fail("the user does not exist .",501).toString());
                     return false;
                 }
 
@@ -80,7 +81,11 @@ public class TokenInterceptor implements HandlerInterceptor {
                 try {
                     jwtVerifier.verify(token);
                 }catch (JWTVerificationException e){
-                    throw new RuntimeException("401 .");
+                    if(e instanceof TokenExpiredException){
+                        throw new RuntimeException("401 token iss expired.");
+                    }else {
+                        throw new RuntimeException("401 .");
+                    }
                 }
                 return true;
             }

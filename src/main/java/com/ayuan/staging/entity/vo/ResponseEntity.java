@@ -16,21 +16,21 @@ public class ResponseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-    public String code;
+    public Integer code;
 
     public Map<String, Object> data;
 
-    public String message;
+    public String msg;
 
     public static JSONObject ok(Map<String,Object> data) {
         ResponseEntity resp =  new ResponseEntity(data);
-        resp.setCode("200");
+        resp.setCode(200);
         JSONObject json = (JSONObject) JSONObject.toJSON(resp);
 
         return json;
     }
 
-    public static JSONObject fail(Map<String,Object> data, String message, String code){
+    public static JSONObject fail(Map<String,Object> data, String message, Integer code){
         ResponseEntity resp =  new ResponseEntity(data);
         resp.setCode(code);
         resp.setMessage(message);
@@ -39,7 +39,7 @@ public class ResponseEntity implements Serializable {
         return json;
     }
 
-    public static JSONObject fail(String message, String code){
+    public static JSONObject fail(String message, Integer code){
         ResponseEntity resp =  new ResponseEntity();
         resp.setCode(code);
         resp.setMessage(message);
@@ -64,18 +64,18 @@ public class ResponseEntity implements Serializable {
     }
 
     public String getMessage() {
-        return message;
+        return msg;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        this.msg = message;
     }
 
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 }
